@@ -1,8 +1,10 @@
+import ContactSales from "@/components/ContactSales";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import LastCTA from "@/components/LastCTA";
 import PricingPlans from "@/components/PricingPlans";
 import TestimonialMarquee from "@/components/Testimonials";
-import Testimonials from "@/components/Testimonials";
 import TiltPreview from "@/components/TiltPreview";
 import WhyChooseAs from "@/components/WhyChooseAs";
 import { ArrowRight } from "lucide-react";
@@ -74,6 +76,9 @@ export default function Home() {
       </div>
       <TestimonialMarquee />
       <PricingPlans />
+      <ContactSales />
+      <LastCTA />
+      <Footer />
     </main>
   );
 }
