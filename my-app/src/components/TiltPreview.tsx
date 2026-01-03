@@ -38,7 +38,7 @@ export default function TiltPreview() {
     }
 
     return (
-        <section className="w-full flex justify-center items-center">
+        <section className="px-3 md:px-6 w-full flex justify-center items-center">
             <div
                 className="relative w-full max-w-5xl aspect-video flex justify-center items-center cursor-pointer"
                 style={{ perspective: 3000 }}

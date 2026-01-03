@@ -27,13 +27,13 @@ export default function Footer() {
         />
         </div>
         <div
-            className='w-full col-span-3 flex gap-1'
+            className='w-full col-span-3 flex mb-6 md:mb-0'
         >
             {FooterSections.map((item, idx) => {
                 return (
                     <div
                         key={idx}
-                        className='w-full flex flex-col gap-1.5 text-sm'
+                        className='w-full flex flex-col items-center gap-1.5 text-sm'
                     >
                         <b className='capitalize text-md'>
                             {item.title}

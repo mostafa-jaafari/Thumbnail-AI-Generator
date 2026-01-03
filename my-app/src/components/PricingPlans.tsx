@@ -11,7 +11,7 @@ const Pricing_Details = [
 export default function PricingPlans() {
   return (
     <div
-        className='w-full lg:px-36 md:px-6 px-3 min-h-screen flex flex-col items-center'
+        className='w-full lg:px-36 md:px-6 px-3 flex flex-col items-center'
     >
         <div
             className='flex flex-col items-center'
@@ -33,7 +33,7 @@ export default function PricingPlans() {
             </p>
         </div>
         <div
-            className='w-full flex items-center justify-between gap-6 pt-24'
+            className='w-full flex md:flex-row flex-col items-center justify-between gap-6 pt-24'
         >
             {Pricing_Details.map((plan, idx) => {
                 return (
@@ -42,7 +42,7 @@ export default function PricingPlans() {
                         className={`relative hover:-translate-y-2 max-w-80 w-full p-6 min-h-50
                             rounded-lg overflow-hidden border transition-transform duration-300
                             ${plan.type.toLowerCase() === "pro" ? 
-                                "scale-105 -translate-y-3 bg-pink-700/40 border-pink-700/80"
+                                "mt-6 md:mt-0 scale-105 -translate-y-3 bg-pink-700/40 border-pink-700/80"
                                 :
                                 "bg-pink-600/10 border-pink-700/20"}`}
                     >

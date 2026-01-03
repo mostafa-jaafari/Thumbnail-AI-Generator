@@ -7,7 +7,7 @@ const Featured = ["No design skills needed", "Fast generation", "High CTR templa
 export default function HeroSection() {
   return (
     <div
-        className='w-full mb-12 flex flex-col items-center overflow-hidden'
+        className='px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
     >
         <div
             className='absolute top-0 -z-1 w-260 h-160 blur-3xl rounded-full opacity-10 bg-gradient-to-r from-transparent via-pink-600 to-transparent'
@@ -39,14 +39,14 @@ export default function HeroSection() {
             </h1>
 
             <p
-                className='text-sm text-neutral-300 max-w-lg'
+                className='text-sm text-gray-500 max-w-lg'
             >
                 Stop wasting hours on design. Get high-converting 
                 thumbnails in seconds with our advanced AI.
             </p>
 
             <div
-                className='flex items-center gap-3'
+                className='flex flex-col md:flex-row items-center gap-3'
             >
                 <button
                     className='cursor-pointer hover:bg-pink-700/90 bg-pink-700 text-white rounded-full px-6 py-2'
@@ -61,7 +61,7 @@ export default function HeroSection() {
                 </button>
             </div>
             <ul
-                className='flex items-center gap-12 mt-6'
+                className='flex items-center gap-6 md:gap-12 flex-wrap justify-center mt-6'
             >
                 {Featured.map((feat, idx) => {
                     return (

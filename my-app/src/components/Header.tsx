@@ -1,4 +1,4 @@
-import { LogIn } from 'lucide-react'
+import { LogIn, Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -22,7 +22,7 @@ export default function Header() {
         />
 
         <ul
-            className='flex items-center lg:gap-12 md:gap-6'
+            className='hidden md:flex items-center lg:gap-12 md:gap-6'
         >
             {HeaderNavigation.map((nav, idx) => {
                 return (
@@ -37,14 +37,24 @@ export default function Header() {
             })}
         </ul>
 
-        <Link
-            href="/auth/login"
-            className='px-6 py-2 flex items-center gap-1.5 rounded-full 
-                hover:bg-pink-700/90 cursor-pointer bg-pink-700 text-white 
-                font-semibold text-sm'
+        <div
+            className='flex items-center gap-3'
         >
-            Login <LogIn size={16}/>
-        </Link>
+            <Link
+                href="/auth/login"
+                className='px-6 py-2 flex items-center gap-1.5 rounded-full 
+                    hover:bg-pink-700/90 cursor-pointer bg-pink-700 text-white 
+                    font-semibold text-sm'
+            >
+                Login <LogIn size={16}/>
+            </Link>
+
+            <button
+                className='block md:hidden cursor-pointer hover:text-neutral-400 transition-colors duration-200'
+            >
+                <Menu size={24}/>
+            </button>
+        </div>
     </div>
   )
 }
