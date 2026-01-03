@@ -4,7 +4,7 @@ import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const testimonials = [
+export const testimonials = [
   {
     name: "Ethan Walker",
     handle: "@ethanwrites",
