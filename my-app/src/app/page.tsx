@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import LastCTA from "@/components/LastCTA";
 import PricingPlans from "@/components/PricingPlans";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import TestimonialMarquee from "@/components/Testimonials";
 import TiltPreview from "@/components/TiltPreview";
 import WhyChooseAs from "@/components/WhyChooseAs";
@@ -79,6 +80,7 @@ export default function Home() {
       <ContactSales />
       <LastCTA />
       <Footer />
+      <ScrollToTop />
     </main>
   );
 }
