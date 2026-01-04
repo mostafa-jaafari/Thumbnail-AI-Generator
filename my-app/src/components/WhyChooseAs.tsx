@@ -1,5 +1,6 @@
+"use client";
 import { LucideIcon, Zap } from 'lucide-react'
-
+import { motion } from "framer-motion";
 
 const FeaturedCardItems = [
     {Icon: Zap, title: "Smart Analysis", description: "Our AI analyzes video content to suggest the most clickable concepts."},
@@ -30,7 +31,12 @@ const FeaturedCard = ({ Icon, Title, Description }: { Icon: LucideIcon; Title: s
 
 export default function WhyChooseAs() {
   return (
-    <div className='w-full lg:px-36 md:px-6 px-3 mt-12 flex flex-col items-center gap-24'>
+    <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.5 }}
+        className='w-full lg:px-36 md:px-6 px-3 mt-12 flex flex-col items-center gap-12 md:gap-24'>
         <div
             className='flex flex-col items-center'
         >
@@ -65,6 +71,6 @@ export default function WhyChooseAs() {
                 )
             })}
         </div>
-    </div>
+    </motion.section>
   )
 }

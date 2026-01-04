@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, ChangeEvent } from 'react'
+import { motion } from "framer-motion"
+
 
 export default function ContactSales() {
     const [inputs, setInputs] = useState({
@@ -18,7 +20,11 @@ export default function ContactSales() {
         className='relative w-full flex flex-col items-center lg:px-36 md:px-6 px-3'
     >
         <div className='absolute left-1/3 top-15 bg-pink-700/80 -z-1 blur-3xl w-120 h-120 opacity-10'/>
-        <div
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.5 }}
             className='flex flex-col items-center'
         >
             <span
@@ -36,12 +42,16 @@ export default function ContactSales() {
             >
                 Have questions about our AI? Ready to scale your views? Let&apos;s talk.
             </p>
-        </div>
+        </motion.div>
 
         <div
             className='w-full md:max-w-xl mt-12'
         >
-            <div
+            <motion.div
+                initial={{ opacity: 0, y: 75 }}
+                whileInView={{ opacity: 1 , y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.5 }}
                 className='grid grid-cols-1 md:grid-cols-2 gap-3'
             >
                 {/* --- FullName Input --- */}
@@ -76,7 +86,7 @@ export default function ContactSales() {
                         className='border border-neutral-800 hover:border-neutral-700 focus:border-pink-700 px-3 py-2 rounded-lg outline-none translate-all duration-200'
                     />
                 </div>
-            </div>
+            </motion.div>
                 {/* --- Message TextArea --- */}
                 <div
                     className="w-full flex flex-col gap-0.5 mt-3"

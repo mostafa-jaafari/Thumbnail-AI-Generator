@@ -61,9 +61,9 @@ export default function Footer() {
             className='col-span-1 text-center p-3'
         >
             <p
-                className='text-gray-500 text-sm'
+                className='text-gray-500 text-sm mb-6'
             >
-                Making every customer feel valued—no matter 
+                Making every customer feel valued no matter 
                 the size of your audience.
             </p>
             <span

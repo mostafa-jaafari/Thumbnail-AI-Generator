@@ -38,7 +38,12 @@ export default function TiltPreview() {
     }
 
     return (
-        <section className="px-3 md:px-6 w-full flex justify-center items-center">
+        <motion.section 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true , amount: 0.5}}
+            className="px-3 md:px-6 w-full flex justify-center items-center">
             <div
                 className="relative w-full max-w-5xl aspect-video flex justify-center items-center cursor-pointer"
                 style={{ perspective: 3000 }}
@@ -71,6 +76,6 @@ export default function TiltPreview() {
                     <div className='absolute rounded-b-2xl bottom-0 left-0 w-full h-60 bg-gradient-to-t from-black to-transparent'/>
                 </motion.div>
             </div>
-        </section>
+        </motion.section>
     );
 }

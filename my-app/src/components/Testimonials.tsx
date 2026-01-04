@@ -2,7 +2,7 @@
 
 import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import { motion } from "framer-motion";
 
 export const testimonials = [
   {
@@ -39,11 +39,15 @@ export const testimonials = [
 
 export default function TestimonialMarquee() {
   return (
-    <section className="w-full pb-20 md:py-20 text-white relative">
+    <section className="w-full pb-20 md:pb-20 text-white relative">
     <div className="absolute left-1/3 rounded-full w-160 h-160 bg-pink-700 opacity-10 blur-3xl"/>
     {/* Background Glow */}
-    <div
-        className='flex flex-col items-center'
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.5 }}
+      className='flex flex-col items-center'
     >
         <span
         className='bg-pink-700/10 border border-pink-700 rounded-full px-8 py-2 text-pink-700'
@@ -60,13 +64,18 @@ export default function TestimonialMarquee() {
         >
             See how our AI thumbnails are helping channels explode their views.
         </p>
-    </div>
+    </motion.div>
 
     {/* --- Marquee Wrapper --- */}
     <div className="space-y-3 mt-12">
         
         {/* ROW 1: Normal Direction (Right to Left) */}
-        <div className="relative w-full overflow-hidden group">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.5 }}
+          className="relative w-full overflow-hidden group">
                 {/* Masks */}
             <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-l from-black via-black/80 to-transparent pointer-events-none" />
@@ -83,10 +92,15 @@ export default function TestimonialMarquee() {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
 
         {/* ROW 2: Reverse Direction (Left to Right) */}
-        <div className="relative w-full overflow-hidden group">
+        <motion.div
+          initial={{ opacity: 0, y: 75 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.5 }}
+          className="relative w-full overflow-hidden group">
                 {/* Masks */}
                 <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-l from-black via-black/80 to-transparent pointer-events-none" />
@@ -104,7 +118,7 @@ export default function TestimonialMarquee() {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
 
     </div>
     </section>

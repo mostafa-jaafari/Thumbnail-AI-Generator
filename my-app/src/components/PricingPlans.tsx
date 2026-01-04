@@ -1,5 +1,6 @@
+"use client";
 import { Check } from 'lucide-react';
-import React from 'react'
+import { motion } from 'framer-motion';
 
 
 const Pricing_Details = [
@@ -33,11 +34,15 @@ export default function PricingPlans() {
             </p>
         </div>
         <div
-            className='w-full flex md:flex-row flex-col items-center justify-between gap-6 pt-24'
+            className='w-full flex md:flex-row flex-col items-center justify-between gap-3 md:gap-6 md:py-24 py-12'
         >
             {Pricing_Details.map((plan, idx) => {
                 return (
-                    <div
+                    <motion.div
+                        initial={plan.type.toLowerCase() !== "pro" && { opacity: 0, y: 75 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true, amount: 0.5 }}
                         key={idx}
                         className={`relative hover:-translate-y-2 max-w-80 w-full p-6 min-h-50
                             rounded-lg overflow-hidden border transition-transform duration-300
@@ -85,7 +90,7 @@ export default function PricingPlans() {
                         >
                             Get Started
                         </button>
-                    </div>
+                    </motion.div>
                 )
             })}
         </div>

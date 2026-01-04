@@ -5,9 +5,9 @@ import React from 'react'
 
 const HeaderNavigation = [
     { name: 'Home', href: '/' },
-    { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Contact', href: '/contact' }
+    { name: 'Features', href: '/' },
+    { name: 'Pricing', href: '/' },
+    { name: 'Contact', href: '/' }
 ]
 export default function Header() {
   return (

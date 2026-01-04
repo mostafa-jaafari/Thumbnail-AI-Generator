@@ -1,8 +1,13 @@
-import React from 'react'
+"use client";
+import { motion } from "framer-motion";
 
 export default function LastCTA() {
   return (
-    <div
+    <motion.div
+        initial={{ opacity: 0, y: 75 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.5 }}
         className='mt-24 w-full p-6 lg:px-36 md:px-6 px-3'
     >
         <div
@@ -29,6 +34,6 @@ export default function LastCTA() {
                 Generate Free Thumbnail
             </button>
         </div>
-    </div>
+    </motion.div>
   )
 }

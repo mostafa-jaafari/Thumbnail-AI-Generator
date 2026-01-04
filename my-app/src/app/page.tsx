@@ -21,7 +21,7 @@ export default function Home() {
       <TiltPreview />
       <WhyChooseAs />
       <div
-        className="relative z-1 mb-12 md:mb-24 w-full lg:px-36 md:px-6 px-3 mt-24 flex md:flex-row flex-col items-start gap-12"
+        className="relative z-1 my-12 md:my-24 w-full lg:px-36 md:px-6 px-3 flex md:flex-row flex-col items-start gap-6 md:gap-12"
       >
         <div className="absolute left-1/3 h-0 w-120 h-120 rounded-full blur-3xl opacity-20 bg-pink-700"/>
         <div
