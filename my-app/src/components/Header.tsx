@@ -28,7 +28,7 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
     },[HandleCloseMenu])
     return (
         <div
-            className='fixed right-0 top-0 z-50 flex justify-end bg-black/50 w-full h-screen'
+            className='fixed right-0 top-0 md:hidden z-50 flex justify-end bg-black/50 w-full h-screen'
         >
             <motion.div
                 ref={MenuRef}
