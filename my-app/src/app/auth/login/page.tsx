@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import LoginForm from './LoginForm'
 import AuthReviewsSection from './AuthReviewsSection'
+import Link from 'next/link'
+import SignIn_Google_Button from './SignIn_Google_Button'
 
 export default function page() {
-
+    
     return (
         <div
             className='relative w-full flex h-screen overflow-hidden'
@@ -14,7 +16,8 @@ export default function page() {
             <div
                 className='lg:mx-0 mx-auto flex-shrink-0 max-w-[550px] w-full z-2 md:p-6 p-3 lg:bg-pink-700/5 lg:border-r border-pink-700/40 w-full h-full'
             >
-                <div
+                <Link
+                    href="/"
                     className='py-3'
                 >
                     <Image
@@ -23,7 +26,7 @@ export default function page() {
                         height={60} 
                         alt=''
                     />
-                </div>
+                </Link>
                 <div
                     className='py-6 px-9'
                 >
@@ -43,20 +46,7 @@ export default function page() {
                         <div
                             className='mt-6 space-y-3'
                         >
-                            <button
-                                className='flex items-center justify-center gap-3 text-white
-                                    bg-pink-700/60 w-full py-2 rounded-lg border border-pink-700
-                                    cursor-pointer hover:bg-pink-700/50'
-                            >
-                                <Image
-                                    src="/GoogleIcon.png"
-                                    alt='Google Icon'
-                                    width={20}
-                                    height={20}
-                                    loading='lazy'
-                                />
-                                Continue with Google
-                            </button>
+                            <SignIn_Google_Button />
                             <button
                                 className='flex items-center justify-center gap-3 text-white
                                     bg-pink-700/60 w-full py-2 rounded-lg border border-pink-700

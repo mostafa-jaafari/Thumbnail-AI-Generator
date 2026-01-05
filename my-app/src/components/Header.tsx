@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
 import { useEffect, useRef, useState } from 'react';
+import { useUserInfos } from '@/context/UserInfos';
 
 
 const HeaderNavigation = [
@@ -68,9 +69,61 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
         </div>
     )
 }
-export default function Header() {
-    const [isOpenMenu, setIsOpenMenu] = useState(false);
 
+const DropDownProfile = () => {
+
+    return (
+        <div
+            className='absolute top-full mt-1 left-0 w-full min-h-40 
+                bg-black rounded-lg border border-neutral-900 p-3 z-1
+                overflow-hidden flex flex-col justify-between cursor-default'
+        >
+            <div className='w-full h-30 absolute -z-1 inset-0 translate-y-1/2 opacity-30 blur-3xl bg-pink-900 rounded-full'/>
+            <ul
+                className='space-y-0.5'
+            >
+                {["Home", "Generate", "Contact"].map((item, idx) => {
+                    return (
+                        <button
+                            onClick={(e) => e.stopPropagation()}
+                            key={idx}
+                            className='text-center text-sm px-3 py-1 cursor-pointer hover:bg-neutral-900/80 rounded-lg bg-neutral-900 w-full'
+                        >
+                            {item}
+                        </button>
+                    )
+                })}
+            </ul>
+
+            <button
+                onClick={(e) => e.stopPropagation()}
+                className='bg-red-800 hover:bg-red-800/80 cursor-pointer w-full py-1 rounded-lg text-white text-sm'
+            >
+                Sign Out
+            </button>
+        </div>
+    )
+}
+
+
+export default function Header() {
+    const { userInfos, isLoggedIn } = useUserInfos();
+
+    const DropDownProfileRef = useRef<HTMLDivElement | null>(null);
+    
+    const [isOpenMenu, setIsOpenMenu] = useState(false);
+    const [isDropDownProfilOpen, setIsDropDownProfilOpen] = useState(false);
+
+    useEffect(() => {
+        const hideDropDownProfile = (e: MouseEvent) => {
+            if(DropDownProfileRef.current && !DropDownProfileRef.current.contains(e.target as Node)){
+                setIsDropDownProfilOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", hideDropDownProfile);
+        return () => document.removeEventListener("mousedown", hideDropDownProfile);
+    },[])
     const HandleCloseMenu = () => {
         setIsOpenMenu(false);
     }
@@ -84,7 +137,6 @@ export default function Header() {
                 height={60} 
                 alt=''
             />
-
             <ul
                 className='hidden md:flex items-center lg:gap-12 md:gap-6'
             >
@@ -103,15 +155,58 @@ export default function Header() {
 
             <div
                 className='flex items-center gap-3'
+                ref={DropDownProfileRef}
             >
-                <Link
-                    href="/auth/login"
-                    className='px-6 py-2 flex items-center gap-1.5 rounded-full 
-                        hover:bg-pink-700/90 cursor-pointer bg-pink-700 text-white 
-                        font-semibold text-sm'
-                >
-                    Login <LogIn size={16}/>
-                </Link>
+                {isLoggedIn ? (
+                    <button
+                        onClick={() => setIsDropDownProfilOpen(!isDropDownProfilOpen)}
+                        className={`relative cursor-pointer border
+                            rounded-lg py-0.5 px-1 transition-all duration-200
+                            ${isDropDownProfilOpen ? "bg-neutral-900/20 border-neutral-900" : "border-transparent hover:border-neutral-900 hover:bg-neutral-900/20"}`}
+                    >
+                        <div
+                            className='flex items-center gap-1.5'
+                        >
+                            <div
+                                className='relative text-wrap w-10 h-10 rounded-full overflow-hidden border border-pink-700'
+                            >
+                                <Image
+                                    src={userInfos?.user_metadata?.avatar_url || "/Default-Avatar.jpg"}
+                                    alt='User Profile'
+                                    fill
+                                    className='object-cover'
+                                    priority
+                                />
+                            </div>
+                            <span
+                                className='text-start'
+                            >
+                                <h1
+                                    className='truncate max-w-[140px] text-sm text-pink-700'
+                                >
+                                    {userInfos?.user_metadata?.full_name || userInfos?.email?.split("@")[0]}
+                                </h1>
+                                <p
+                                    className='truncate max-w-[140px] text-gray-500 text-xs'
+                                >
+                                    {userInfos?.email}
+                                </p>
+                            </span>
+                        </div>
+                        {isDropDownProfilOpen && (
+                            <DropDownProfile />
+                        )}
+                    </button>
+                ) : (
+                    <Link
+                        href="/auth/login"
+                        className='px-6 py-2 flex items-center gap-1.5 rounded-full 
+                            hover:bg-pink-700/90 cursor-pointer bg-pink-700 text-white 
+                            font-semibold text-sm'
+                    >
+                        Login <LogIn size={16}/>
+                    </Link>
+                )}
 
                 <button
                     onClick={() => setIsOpenMenu(true)}
