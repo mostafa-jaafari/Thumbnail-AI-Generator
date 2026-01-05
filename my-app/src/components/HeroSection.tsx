@@ -13,7 +13,7 @@ export default function HeroSection() {
             className='absolute top-0 -z-1 w-260 h-160 blur-3xl rounded-full opacity-10 bg-gradient-to-r from-transparent via-pink-600 to-transparent'
         />
         <div
-            className='relative z-2 mt-12 max-w-3xl flex flex-col items-center gap-6 text-center'
+            className='relative z-2 max-w-3xl flex flex-col items-center gap-6 text-center'
         >
             <div
                 className='flex font-light items-center gap-2 tracking-wider text-sm bg-pink-400/20 p-1 pr-3 rounded-full'
@@ -39,7 +39,7 @@ export default function HeroSection() {
             </h1>
 
             <p
-                className='text-sm text-gray-500 max-w-lg'
+                className='text-sm text-gray-500 max-w-lg mt-3'
             >
                 Stop wasting hours on design. Get high-converting 
                 thumbnails in seconds with our advanced AI.
