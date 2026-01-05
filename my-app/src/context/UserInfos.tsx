@@ -13,6 +13,7 @@ import {
 type UserInfosType = {
   userInfos: User | null;
   isLoggedIn: boolean;
+  isLoading: boolean;
 };
 
 const UserInfosContext = createContext<UserInfosType | null>(null);
@@ -20,14 +21,19 @@ const UserInfosContext = createContext<UserInfosType | null>(null);
 export function UserInfosProvider({ children }: { children: ReactNode }) {
   const [userInfos, setUserInfos] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const supabase = createClient();
     // 1️⃣ جلب المستخدم الحالي عند التحميل
     const getInitialUser = async () => {
+      setIsLoading(true);
+
       const { data } = await supabase.auth.getUser();
       setUserInfos(data.user);
       setIsLoggedIn(!!data.user);
+      
+      setIsLoading(false);
     };
 
     getInitialUser();
@@ -48,6 +54,7 @@ export function UserInfosProvider({ children }: { children: ReactNode }) {
       value={{
         userInfos,
         isLoggedIn,
+        isLoading
       }}
     >
       {children}

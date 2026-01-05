@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
 import { useEffect, useRef, useState } from 'react';
 import { useUserInfos } from '@/context/UserInfos';
+import { createClient } from '@/utils/supabase/client';
 
 
 const HeaderNavigation = [
@@ -71,7 +72,7 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
 }
 
 const DropDownProfile = () => {
-
+    const supabase = createClient();
     return (
         <div
             className='absolute top-full mt-1 left-0 w-full min-h-40 
@@ -96,7 +97,10 @@ const DropDownProfile = () => {
             </ul>
 
             <button
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    supabase.auth.signOut();
+                }}
                 className='bg-red-800 hover:bg-red-800/80 cursor-pointer w-full py-1 rounded-lg text-white text-sm'
             >
                 Sign Out
