@@ -15,7 +15,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main
-      className="w-full min-h-screen overflow-hidden flex flex-col items-center justify-start gap-12"
+      className="w-full min-h-screen flex flex-col items-center justify-start gap-12"
     >
       <Header />
       <HeroSection />
