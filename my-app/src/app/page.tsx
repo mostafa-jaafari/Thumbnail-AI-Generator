@@ -1,6 +1,5 @@
 import ContactSales from "@/components/ContactSales";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import LastCTA from "@/components/LastCTA";
 import PricingPlans from "@/components/PricingPlans";
@@ -18,7 +17,6 @@ export default function Home() {
     <main
       className="w-full min-h-screen flex flex-col items-center justify-start gap-12"
     >
-      <Header />
       <HeroSection />
       <TiltPreview />
       <WhyChooseAs />

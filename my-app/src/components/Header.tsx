@@ -7,6 +7,10 @@ import { FiX } from "react-icons/fi";
 import { useEffect, useRef, useState } from 'react';
 import { useUserInfos } from '@/context/UserInfos';
 import { createClient } from '@/utils/supabase/client';
+import { GiToken } from 'react-icons/gi';
+import { GoHomeFill } from 'react-icons/go';
+import { RiAiGenerate2, RiContactsFill } from 'react-icons/ri';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 
 const HeaderNavigation = [
@@ -71,26 +75,38 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
     )
 }
 
-const DropDownProfile = () => {
+const DropDownProfile = ({User_Credits} : {User_Credits: number | null;}) => {
     const supabase = createClient();
     return (
         <div
             className='absolute top-full mt-1 left-0 w-full min-h-40 
-                bg-black rounded-lg border border-neutral-900 p-3 z-1
+                bg-neutral-900 rounded-lg border border-neutral-800 p-1.5 z-1 
                 overflow-hidden flex flex-col justify-between cursor-default'
         >
-            <div className='w-full h-30 absolute -z-1 inset-0 translate-y-1/2 opacity-30 blur-3xl bg-pink-900 rounded-full'/>
-            <ul
-                className='space-y-0.5'
+            <div
+                className='text-sm text-pink-700 flex items-center gap-1.5 px-1.5 pb-1'
             >
-                {["Home", "Generate", "Contact"].map((item, idx) => {
+                <GiToken size={20} />
+                <span
+                    className='flex items-center gap-1 text-sm'
+                >
+                    <h1>{User_Credits}</h1>
+                    <p className='font-light text-xs text-neutral-500'>Credits</p>
+                </span>
+
+            </div>
+            <span className='flex h-px w-full bg-neutral-800'/>
+            <ul
+                className='space-y-0.5 py-1.5'
+            >
+                {[{name: "Home", icon: GoHomeFill}, {name: "Generate", icon: RiAiGenerate2}, {name: "Contact", icon: RiContactsFill}].map((item, idx) => {
                     return (
                         <button
                             onClick={(e) => e.stopPropagation()}
                             key={idx}
-                            className='text-center text-sm px-3 py-1 cursor-pointer hover:bg-neutral-900/80 rounded-lg bg-neutral-900 w-full'
+                            className='text-start text-sm flex items-center gap-1.5 px-1.5 py-1 cursor-pointer hover:bg-neutral-800/80 rounded-lg w-full'
                         >
-                            {item}
+                            <item.icon size={18} /> {item.name}
                         </button>
                     )
                 })}
@@ -101,16 +117,16 @@ const DropDownProfile = () => {
                     e.stopPropagation();
                     supabase.auth.signOut();
                 }}
-                className='bg-red-800 hover:bg-red-800/80 cursor-pointer w-full py-1 rounded-lg text-white text-sm'
+                className='flex items-center justify-center gap-1.5 bg-red-800 hover:bg-red-800/80 cursor-pointer w-full py-1 rounded-lg text-white text-sm'
             >
-                Sign Out
+                <FaSignOutAlt size={16} /> Sign Out
             </button>
         </div>
     )
 }
 
 
-export default function Header() {
+export default function Header({User_Credits} : {User_Credits: number | null;}) {
     const { userInfos, isLoggedIn } = useUserInfos();
 
     const DropDownProfileRef = useRef<HTMLDivElement | null>(null);
@@ -166,7 +182,7 @@ export default function Header() {
                         onClick={() => setIsDropDownProfilOpen(!isDropDownProfilOpen)}
                         className={`relative cursor-pointer border
                             rounded-lg py-0.5 px-1 transition-all duration-200
-                            ${isDropDownProfilOpen ? "bg-neutral-900/20 border-neutral-900" : "border-transparent hover:border-neutral-900 hover:bg-neutral-900/20"}`}
+                            ${isDropDownProfilOpen ? "bg-neutral-900/20 border-neutral-900" : "border-neutral-900 bg-black/40 hover:border-neutral-900 hover:bg-neutral-900/20"}`}
                     >
                         <div
                             className='flex items-center gap-1.5'
@@ -198,7 +214,7 @@ export default function Header() {
                             </span>
                         </div>
                         {isDropDownProfilOpen && (
-                            <DropDownProfile />
+                            <DropDownProfile User_Credits={User_Credits} />
                         )}
                     </button>
                 ) : (

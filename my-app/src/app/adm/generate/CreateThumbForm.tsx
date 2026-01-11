@@ -116,22 +116,27 @@ const DropDownStyles = ({ closeDropDown }: { closeDropDown: (description: string
         </div>
     )
 }
-export function CreateThumbForm() {
-    const [inputs, setInputs] = useState({
-        topic: "",
-        aspectRatio: "16:9",
-        thumbnailStyle: {
-            icon: ImBold,
-            title: "Bold & Graphic",
-            description: "High contrast, bold typography, striking visuals"
-        },
-        colorScheme: {
-            name: "Dark Neon",
-            colors: ["#7C3AED", "#22D3EE", "#0F172A"],
-        },
-        additionalPrompts: "",
-    });
 
+type InputsType = {
+    topic: string;
+    aspectRatio: {
+        size: string,
+        h: number,
+        w: number
+    },
+    thumbnailStyle: {
+        icon: IconType,
+        title: string,
+        description: string
+    },
+    colorScheme: {
+        name: string,
+        colors: string[]
+    },
+    additionalPrompt: string
+};
+
+export function CreateThumbForm({ setThumbnailSize, HandleSubmitForm, isGenerating, inputs, setInputs }: { setThumbnailSize: (size: string) => void; HandleSubmitForm: (e: React.FormEvent<HTMLFormElement>) => Promise<void>; isGenerating: boolean; inputs: InputsType; setInputs: (inputs: InputsType) => void; }) {
     const ThumbnailStyleRef = useRef<HTMLDivElement | null>(null)
     const [isThumbnailStyleOpen, setIsThumbnailStyleOpen] = useState(false);
 
@@ -143,12 +148,17 @@ export function CreateThumbForm() {
         })
     }
 
-    const HandleSelectAspectRatio = (e: React.MouseEvent<HTMLButtonElement>, rat: string) => {
+    const HandleSelectAspectRatio = (e: React.MouseEvent<HTMLButtonElement>, rat: { size: string, h: number, w: number }) => {
         e.preventDefault();
         setInputs({
             ...inputs,
-            aspectRatio: rat
+            aspectRatio: {
+                size: rat.size,
+                h: rat.h,
+                w: rat.w
+            }
         })
+        setThumbnailSize(rat.size)
     }
     const HandleAddColorScheme = (schemeColors: string[], schemeName: string) => {
         setInputs({
@@ -160,10 +170,7 @@ export function CreateThumbForm() {
         })
     }
     
-    const HandleSubmitForm = () => {
-        // 
-    }
-
+    
     const HandleCloseDropDownMenu = (description: string, title: string, icon: IconType) => {
         setInputs({
             ...inputs,
@@ -185,13 +192,13 @@ export function CreateThumbForm() {
         return () => document.removeEventListener("mousedown", hideDropDonMenu)
     },[])
     const Max_Topic_Length = 100;
-    const Max_Additional_Prompts_Length = 115;
+    const Max_Additional_Prompts_Length = 350;
+
     return (
         <form
             onSubmit={HandleSubmitForm}
-            className='mt-6'
+            className="mt-6"
         >
-
             {/* --- TOPIC or TITLE --- */}
             <div
                 className='w-full flex flex-col items-start'
@@ -231,17 +238,17 @@ export function CreateThumbForm() {
             <div
                 className='w-full grid grid-cols-3 gap-1.5'
             >
-                {[{size: "16:9", icon: LuRectangleHorizontal}, {size: "1:1", icon: FaRegSquare}, {size: "9:16", icon: LuRectangleVertical}].map((rat, idx) => {
+                {[{size: {size: "16:9", h: 720, w: 1280}, icon: LuRectangleHorizontal}, {size: {size: "1:1", h: 1280, w: 1280}, icon: FaRegSquare}, {size: {size: "9:16", h: 1280, w: 720}, icon: LuRectangleVertical}].map((rat, idx) => {
                     return (
                         <button
                             key={idx}
-                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => HandleSelectAspectRatio(e, rat.size as string)}
+                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => HandleSelectAspectRatio(e, rat.size)}
                             className={`w-full py-2.5 flex items-center 
                                 gap-1.5 justify-center text-sm
                                 border backdrop-blur-md rounded-lg
-                                ${inputs.aspectRatio === rat.size ? "border-2 border-pink-700 bg-pink-900/20 text-pink-600" : "font-light text-neutral-300 cursor-pointer bg-neutral-900/30 border-neutral-700 "}`}
+                                ${inputs.aspectRatio.size === rat.size.size ? "border-2 border-pink-700 bg-pink-900/20 text-pink-600" : "font-light text-neutral-300 cursor-pointer bg-neutral-900/30 border-neutral-700 "}`}
                         >
-                           <rat.icon size={24}/> {rat.size}
+                           <rat.icon size={24}/> {rat.size.size}
                         </button>
                     )
                 })}
@@ -301,20 +308,20 @@ export function CreateThumbForm() {
             </h1>
 
             <div
-                className='flex flex-wrap justify-between items-center gap-1'
+                className='grid grid-cols-3 gap-1'
             >
                 {colorSchemes.map((scheme) => (
                     <div 
                         key={scheme.name}
                         role='button'
                         onClick={() => HandleAddColorScheme(scheme.colors, scheme.name)}
-                        className={`flex rounded-lg overflow-hidden border-2
+                        className={`flex rounded-lg overflow-hidden border-2 w-full
                         ${inputs.colorScheme.name === scheme.name ? "border-pink-700" : "hover:border-pink-700/20 cursor-pointer border-transparent" }`}>
                         {scheme.colors.map((color, i) => (
                         <div
                             key={i}
                             style={{ backgroundColor: color }}
-                            className="w-7 h-10"
+                            className="w-1/3 h-10"
                         />
                         ))}
                     </div>
@@ -326,15 +333,15 @@ export function CreateThumbForm() {
                 className='mt-6 flex flex-col space-y-1.5'
             >
                 <label 
-                    htmlFor="AdditionalPrompts"
+                    htmlFor="AdditionalPrompt"
                     className=''
                 >
                     Additional Prompts <span className='text-sm text-gray-500'>(optional)</span>
                 </label>
                 <textarea
-                    id='AdditionalPrompts'
-                    name='additionalPrompts'
-                    value={inputs.additionalPrompts}
+                    id='AdditionalPrompt'
+                    name='additionalPrompt'
+                    value={inputs.additionalPrompt}
                     onChange={HandleChangeInputs}
                     placeholder='Ex: dark background, neon pink text, ...'
                     maxLength={Max_Additional_Prompts_Length}
@@ -346,11 +353,19 @@ export function CreateThumbForm() {
             </div>
 
             <button
+                type='submit'
+                disabled={isGenerating}
                 className='w-full flex items-center gap-1.5 justify-center 
                     bg-gradient-to-b from-pink-500 to-pink-700 hover:from-pink-700 
                     rounded-lg py-3 text-center mt-6 cursor-pointer text-sm'
             >
-               <FaWandMagicSparkles size={16}/> Generate Thumbnail
+                {isGenerating ? "Generating..." : (
+                    <span
+                        className='flex items-center gap-1.5'
+                    >
+                        <FaWandMagicSparkles size={16}/> Generate Thumbnail
+                    </span>
+                )}
             </button>
         </form>
     )
