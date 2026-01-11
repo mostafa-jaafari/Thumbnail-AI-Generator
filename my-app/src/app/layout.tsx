@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UserInfosProvider } from "@/context/UserInfos";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +24,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased scroll-smooth w-full overflow-x-hidden`}
       >
+        <Toaster 
+          position="top-center"
+          // style={{
+          // }}
+        />
         <UserInfosProvider>
           {children}
         </UserInfosProvider>

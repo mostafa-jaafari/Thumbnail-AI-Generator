@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import LoginForm from './LoginForm'
+import AuthForm from './AuthForm'
 import AuthReviewsSection from './AuthReviewsSection'
 import Link from 'next/link'
-import SignIn_Google_Button from './SignIn_Google_Button'
+import { Google_SignIn_Button } from './Auth_Provider_Buttons'
 
 export default function page() {
     
@@ -46,21 +46,8 @@ export default function page() {
                         <div
                             className='mt-6 space-y-3'
                         >
-                            <SignIn_Google_Button />
-                            <button
-                                className='flex items-center justify-center gap-3 text-white
-                                    bg-pink-700/60 w-full py-2 rounded-lg border border-pink-700
-                                    cursor-pointer hover:bg-pink-700/50'
-                            >
-                                <Image
-                                    src="/FacebookIcon.png"
-                                    alt='Google Icon'
-                                    width={20}
-                                    height={20}
-                                    loading='lazy'
-                                />
-                                Continue with Facebook
-                            </button>
+                            <Google_SignIn_Button />
+                            {/* <Facebook_SingIn_Button /> */}
                         </div>
 
                         {/* --- Divider --- */}
@@ -72,7 +59,7 @@ export default function page() {
                             <span className='flex h-px w-full my-6 bg-neutral-800'/>
                         </div>
                         {/* --- Login Form --- */}
-                        <LoginForm />
+                        <AuthForm />
                     </div>
                 </div>
             </div>
