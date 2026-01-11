@@ -16,7 +16,7 @@ const Confirm_Email_Modal = ({ setIsOpenConfirmModal }: { setIsOpenConfirmModal:
             <div
                 className='relative z-1 w-full max-w-[600px] min-w-[250px] 
                     bg-gradient-to-tr from-black to-neutral-900 h-[400px] 
-                    rounded-lg p-4 md:p-6 border border-neutral-700/50 shadow-lg 
+                    rounded-2xl p-4 md:p-6 border border-neutral-700/50 shadow-lg 
                     text-white flex flex-col justify-center items-center overflow-hidden'
             >
                 <div className='absolute inset-0 translate-x-5/6 translate-y-1/3 w-50 h-60 bg-white/30 opacity-40 blur-3xl -z-1'/>
@@ -62,24 +62,21 @@ export default function AuthForm() {
     const HandleLoginSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const supabase = createClient();
-        setIsLoadingAuth(true);
         if(currentForm === "signup"){
             if(inputs.password.trim().length < 6){
                 toast.error("Password must be at least 6 characters long.");
-                setIsLoadingAuth(false);
                 return;
             }
             if(inputs.password.trim() !== inputs.confirmpassword.trim()){
                 toast.error("Password and Confirm Password do not match.");
-                setIsLoadingAuth(false);
                 return;
             }
             if(inputs.password.trim().includes(" ")){
                 toast.error("Password cannot contain spaces.");
-                setIsLoadingAuth(false);
                 return;
             }
             try{
+                setIsLoadingAuth(true);
                 supabase.auth.signUp({
                     email: inputs.email,
                     password: inputs.password,
@@ -92,40 +89,43 @@ export default function AuthForm() {
                     setIsOpenConfirmModal(true);
                     setCurrentForm("login");
                     toast.success("Account created successfully. Please log in.");
+                    setIsLoadingAuth(false);
                 })
             }catch (err){
                 setAuthError((err as { message: string }).message);
-            }finally{
-                setIsLoadingAuth(false);
             }
         }else if (currentForm === "login"){
             if(inputs.password.trim().length < 6){
                 setAuthError("Password must be at least 6 characters long.")
+                setIsLoadingAuth(false);
                 return;
             }else{
                 setAuthError("")
             }
             if(inputs.email.trim() === "" || inputs.password.trim() === ""){
                 setAuthError("Email and Password cannot be empty.");
+                setIsLoadingAuth(false);
                 return;
             }
             try{
+                setIsLoadingAuth(true);
                 supabase.auth.signInWithPassword({
                     email: inputs.email,
                     password: inputs.password,
                 }).then(({ error }) => {
                     if (error) {
                         setAuthError(error.message);
+                        setIsLoadingAuth(false);
+                        return;
                     } else {
                         toast.success("Logged in successfully.");
                         router.refresh();
                         router.push('/');
+                        setIsLoadingAuth(false);
                     }
                 })
             }catch (err){
                 setAuthError((err as { message: string }).message)
-            }finally{
-                setIsLoadingAuth(false);
             }
         }
     }
