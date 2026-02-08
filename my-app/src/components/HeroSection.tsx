@@ -1,17 +1,17 @@
 "use client";
 import { useUserInfos } from '@/context/UserInfos';
-import { Check, ChevronRight, Video } from 'lucide-react'
 import { useRouter } from 'next/navigation';
+import { BiCheck, BiChevronRight, BiVideo } from 'react-icons/bi';
 
 
 const Featured = ["No design skills needed", "Fast generation", "High CTR templates"]
 
 export default function HeroSection() {
-    const { isLoggedIn, isLoading } = useUserInfos();
+    const { isLoggedIn } = useUserInfos();
     const router = useRouter();
     return (
         <div
-            className='px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
+            className='mp-8 md:mt-20 px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
         >
             <div
                 className='absolute top-0 -z-1 w-260 h-160 blur-3xl rounded-full opacity-10 bg-gradient-to-r from-transparent via-pink-600 to-transparent'
@@ -28,7 +28,7 @@ export default function HeroSection() {
                     <h1>
                         Thumbnail AI Generator 
                     </h1>
-                    <ChevronRight size={16}/>
+                    <BiChevronRight size={16}/>
                 </div>
 
                 <h1
@@ -53,16 +53,19 @@ export default function HeroSection() {
                     className='flex flex-col md:flex-row items-center gap-3'
                 >
                     <button
-                        disabled={isLoading}
                         onClick={() => router.push(isLoggedIn ? "/adm/generate" : "/auth/login")}
-                        className='min-w-[200px] disabled:text-neutral-300 disabled:animate-pulse cursor-pointer hover:bg-pink-700/90 bg-pink-700 text-white rounded-full px-6 py-2'
+                        className='py-3 px-6 text-sm rounded bg-pink-700
+                        flex items-center gap-1.5 hover:bg-pink-700/80 cursor-pointer
+                        border border-pink-500/60'
                     >
-                        {isLoading ? "Loading ..." : isLoggedIn ? "Generate Now" : "Get Started Now"}
+                        {isLoggedIn ? "Generate Now" : "Get Started Now"}
                     </button>
                     <button
-                        className='flex items-center gap-2 cursor-pointer border border-pink-700 hover:bg-pink-700/10 hover:border-pink-700/90 rounded-full py-2 px-6'
+                        className='py-3 px-6 text-sm rounded bg-transparent
+                        flex items-center gap-1.5 hover:bg-pink-700/10 cursor-pointer
+                        border border-pink-500/60'
                     >
-                        <Video size={16}/>
+                        <BiVideo size={16}/>
                         See how it Works ?
                     </button>
                 </div>
@@ -73,9 +76,9 @@ export default function HeroSection() {
                         return (
                             <li
                                 key={idx}
-                                className='flex items-center gap-1.5 text-gray-500 text-sm'
+                                className='flex items-center gap-1.5 text-neutral-300 text-sm'
                             >
-                                <Check size={20} className='text-pink-700'/> {feat}
+                                <BiCheck size={24} className='text-pink-500'/> {feat}
                             </li>
                         )
                     })}

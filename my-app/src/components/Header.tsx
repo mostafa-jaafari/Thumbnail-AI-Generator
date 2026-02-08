@@ -1,16 +1,15 @@
 "use client";
-import { LogIn, Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
 import { useEffect, useRef, useState } from 'react';
-import { useUserInfos } from '@/context/UserInfos';
-import { createClient } from '@/utils/supabase/client';
 import { GiToken } from 'react-icons/gi';
 import { GoHomeFill } from 'react-icons/go';
 import { RiAiGenerate2, RiContactsFill } from 'react-icons/ri';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { BiLogIn, BiMenu } from 'react-icons/bi';
+import { useUserInfos } from '@/context/UserInfos';
+import { SignOutButton } from '@/app/auth/login/Auth_Button';
 
 
 const HeaderNavigation = [
@@ -75,8 +74,7 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
     )
 }
 
-const DropDownProfile = ({User_Credits} : {User_Credits: number | null;}) => {
-    const supabase = createClient();
+const DropDownProfile = ({ User_Credits } : { User_Credits: number | null; setIsLoggedIn: (login: boolean) => void}) => {
     return (
         <div
             className='absolute top-full mt-1 left-0 w-full min-h-40 
@@ -112,25 +110,15 @@ const DropDownProfile = ({User_Credits} : {User_Credits: number | null;}) => {
                 })}
             </ul>
 
-            <button
-                onClick={(e) => {
-                    e.stopPropagation();
-                    supabase.auth.signOut();
-                }}
-                className='flex items-center justify-center gap-1.5 bg-red-800 hover:bg-red-800/80 cursor-pointer w-full py-1 rounded-lg text-white text-sm'
-            >
-                <FaSignOutAlt size={16} /> Sign Out
-            </button>
+            <SignOutButton />
         </div>
     )
 }
 
 
-export default function Header({User_Credits} : {User_Credits: number | null;}) {
-    const { userInfos, isLoggedIn } = useUserInfos();
-
+export default function Header() {
     const DropDownProfileRef = useRef<HTMLDivElement | null>(null);
-    
+    const { isLoggedIn, setIsLoggedIn } = useUserInfos();
     const [isOpenMenu, setIsOpenMenu] = useState(false);
     const [isDropDownProfilOpen, setIsDropDownProfilOpen] = useState(false);
 
@@ -191,7 +179,7 @@ export default function Header({User_Credits} : {User_Credits: number | null;}) 
                                 className='relative text-wrap w-10 h-10 rounded-full overflow-hidden border border-pink-700'
                             >
                                 <Image
-                                    src={userInfos?.user_metadata?.avatar_url || "/Default-Avatar.jpg"}
+                                    src="/Default-Avatar.jpg"
                                     alt='User Profile'
                                     fill
                                     className='object-cover'
@@ -204,27 +192,27 @@ export default function Header({User_Credits} : {User_Credits: number | null;}) 
                                 <h1
                                     className='truncate max-w-[140px] text-sm text-pink-700'
                                 >
-                                    {userInfos?.user_metadata?.full_name || userInfos?.email?.split("@")[0]}
+                                    Mostafa Jaafari
                                 </h1>
                                 <p
                                     className='truncate max-w-[140px] text-gray-500 text-xs'
                                 >
-                                    {userInfos?.email}
+                                    user.email@test.com
                                 </p>
                             </span>
                         </div>
                         {isDropDownProfilOpen && (
-                            <DropDownProfile User_Credits={User_Credits} />
+                            <DropDownProfile User_Credits={15} setIsLoggedIn={setIsLoggedIn} />
                         )}
                     </button>
                 ) : (
                     <Link
                         href="/auth/login"
-                        className='px-6 py-2 flex items-center gap-1.5 rounded-full 
-                            hover:bg-pink-700/90 cursor-pointer bg-pink-700 text-white 
-                            font-semibold text-sm'
+                        className='py-1.5 px-3 text-sm rounded bg-pink-700
+                        flex items-center gap-1.5 hover:bg-pink-700/80 cursor-pointer
+                        border border-pink-500/60'
                     >
-                        Login <LogIn size={16}/>
+                        Login <BiLogIn size={16}/>
                     </Link>
                 )}
 
@@ -232,7 +220,7 @@ export default function Header({User_Credits} : {User_Credits: number | null;}) 
                     onClick={() => setIsOpenMenu(true)}
                     className='block md:hidden cursor-pointer hover:text-neutral-400 transition-colors duration-200'
                 >
-                    <Menu size={24}/>
+                    <BiMenu size={24}/>
                 </button>
             </div>
             {isOpenMenu && <DropMenu HandleCloseMenu={HandleCloseMenu} />}

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import AuthForm from './AuthForm'
 import AuthReviewsSection from './AuthReviewsSection'
 import Link from 'next/link'
-import { Google_SignIn_Button } from './Auth_Provider_Buttons'
+import { Auth_Button } from './Auth_Button'
 
 export default function page() {
     
@@ -18,7 +18,7 @@ export default function page() {
             >
                 <Link
                     href="/"
-                    className='py-3'
+                    className='py-3 flex w-max'
                 >
                     <Image
                         src="https://thumbnailgo.com/logo.svg" 
@@ -44,10 +44,10 @@ export default function page() {
 
                         {/* --- Auth with Providers --- */}
                         <div
-                            className='mt-6 space-y-3'
+                            className='mt-6 space-y-1.5'
                         >
-                            <Google_SignIn_Button />
-                            {/* <Facebook_SingIn_Button /> */}
+                            <Auth_Button Provider='Google' />
+                            <Auth_Button Provider='Facebook' />
                         </div>
 
                         {/* --- Divider --- */}

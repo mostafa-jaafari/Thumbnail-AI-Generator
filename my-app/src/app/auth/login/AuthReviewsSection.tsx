@@ -2,8 +2,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { testimonials } from "@/components/Testimonials"; // Ensure this path is correct
 import { useEffect, useState } from "react";
-import { BadgeCheck, Quote } from "lucide-react";
 import Image from "next/image";
+import { BsQuote } from "react-icons/bs";
+import { BiBadgeCheck } from "react-icons/bi";
 
 export default function AuthReviewsSection() {
     const [index, setIndex] = useState(0);
@@ -24,7 +25,7 @@ export default function AuthReviewsSection() {
         <div className='relative w-full max-w-lg mx-auto h-full p-6 flex flex-col justify-center items-center'>
             
             {/* Background Decor - Fixed z-index to stay behind */}
-            <Quote className="absolute left-4 top-10 text-pink-600/10 rotate-180 w-24 h-24 -z-10" />
+            <BsQuote className="absolute left-4 top-10 text-pink-600/10 rotate-180 w-24 h-24 -z-10" />
 
             <div className="relative w-full min-h-[180px]"> {/* Min-height prevents layout jumping */}
                 <AnimatePresence mode="wait">
@@ -64,7 +65,7 @@ export default function AuthReviewsSection() {
                             <div>
                                 <h3 className="font-semibold text-white flex items-center gap-1.5 text-base">
                                     {active.name} 
-                                <BadgeCheck size={16} className="text-blue-500 fill-blue-500/10" />
+                                <BiBadgeCheck size={16} className="text-blue-500 fill-blue-500/10" />
                                 </h3>
                                 <p className="text-sm text-gray-500">
                                     {active.handle}

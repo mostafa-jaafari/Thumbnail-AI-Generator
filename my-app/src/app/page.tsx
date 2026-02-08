@@ -1,5 +1,6 @@
 import ContactSales from "@/components/ContactSales";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import LastCTA from "@/components/LastCTA";
 import PricingPlans from "@/components/PricingPlans";
@@ -7,9 +8,9 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import TestimonialMarquee from "@/components/Testimonials";
 import TiltPreview from "@/components/TiltPreview";
 import WhyChooseAs from "@/components/WhyChooseAs";
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { BsArrowRight } from "react-icons/bs";
 
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
     <main
       className="w-full min-h-screen flex flex-col items-center justify-start gap-12"
     >
+      <Header />
       <HeroSection />
       <TiltPreview />
       <WhyChooseAs />
@@ -69,7 +71,7 @@ export default function Home() {
               href="/"
               className="text-pink-700 hover:text-pink-700/90 flex items-center gap-1.5"
             >
-              Start generating free <ArrowRight size={20} className="-rotate-45"/>
+              Start generating free <BsArrowRight size={20} className="-rotate-45"/>
             </Link>
           </div>
         </div>

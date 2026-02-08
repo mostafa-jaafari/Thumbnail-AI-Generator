@@ -1,8 +1,8 @@
 "use client";
 
-import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { BiBadgeCheck } from "react-icons/bi";
 
 export const testimonials = [
   {
@@ -143,7 +143,7 @@ function TestimonialCard({ name, handle, image, text }: { name: string; handle: 
           <div>
             <div className="flex items-center gap-1.5">
               <h4 className="font-semibold text-white text-sm md:text-base">{name}</h4>
-              <BadgeCheck size={16} className="text-blue-500" />
+              <BiBadgeCheck size={16} className="text-blue-500" />
             </div>
             <p className="text-xs md:text-sm text-gray-500">{handle}</p>
           </div>

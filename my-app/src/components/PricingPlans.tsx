@@ -1,6 +1,6 @@
 "use client";
-import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { BiCheck } from 'react-icons/bi';
 
 
 const Pricing_Details = [
@@ -75,7 +75,7 @@ export default function PricingPlans() {
                                         key={idx}
                                         className='flex items-center gap-3 text-gray-400 text-sm tracking-wide'
                                     >
-                                        <Check size={20} className='text-pink-700'/> {feat}
+                                        <BiCheck size={20} className='text-pink-700'/> {feat}
                                     </li>
                                 )
                             })}

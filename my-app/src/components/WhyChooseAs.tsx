@@ -1,18 +1,19 @@
 "use client";
-import { LucideIcon, Zap } from 'lucide-react'
 import { motion } from "framer-motion";
+import { IconType } from "react-icons";
+import { FiZap } from "react-icons/fi";
 
 const FeaturedCardItems = [
-    {Icon: Zap, title: "Smart Analysis", description: "Our AI analyzes video content to suggest the most clickable concepts."},
-    {Icon: Zap, title: "Fully Editable", description: "Get fully layered designs you can tweak to perfection if needed."},
-    {Icon: Zap, title: "Eye-Catching Designs", description: "Generate vibrant, high-contrast thumbnails that stand out in the feed."}
+    {Icon: FiZap, title: "Smart Analysis", description: "Our AI analyzes video content to suggest the most clickable concepts."},
+    {Icon: FiZap, title: "Fully Editable", description: "Get fully layered designs you can tweak to perfection if needed."},
+    {Icon: FiZap, title: "Eye-Catching Designs", description: "Generate vibrant, high-contrast thumbnails that stand out in the feed."}
 
 ];
 
-const FeaturedCard = ({ Icon, Title, Description }: { Icon: LucideIcon; Title: string; Description: string;  }) => {
+const FeaturedCard = ({ Icon, Title, Description }: { Icon: IconType; Title: string; Description: string;  }) => {
     return (
         <div
-            className='p-6 space-y-3 bg-pink-700/10 ring ring-pink-700 border-b border-pink-600 w-full min-h-50 rounded-2xl'
+            className='p-6 space-y-3 bg-pink-700/10 ring ring-pink-700/40 border-b border-pink-600 w-full min-h-50 rounded-2xl'
         >
             <Icon size={36} className='text-pink-200'/>
             <h1
@@ -64,7 +65,7 @@ export default function WhyChooseAs() {
                 return (
                     <FeaturedCard 
                         key={idx}
-                        Icon={Zap}
+                        Icon={item.Icon}
                         Title={item.title}
                         Description={item.description}
                     />

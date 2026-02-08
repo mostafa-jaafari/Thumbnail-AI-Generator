@@ -1,25 +1,26 @@
 "use client";
-import { createClient } from '@/utils/supabase/client';
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, startTransition, useState } from 'react'
 import { toast } from 'sonner';
 import { motion } from "framer-motion";
-import { MdErrorOutline, MdMarkEmailUnread } from 'react-icons/md';
+import { MdMarkEmailUnread } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useUserInfos } from '@/context/UserInfos';
+import { FiAlertTriangle } from 'react-icons/fi';
+import { IoChevronBack } from 'react-icons/io5';
 
 const Confirm_Email_Modal = ({ setIsOpenConfirmModal }: { setIsOpenConfirmModal: (isOpen: boolean) => void; }) => {
     return (
         <div
             className='absolute left-0 top-0 w-full h-screen overflow-hidden 
-                bg-black/20 backdrop-blur-[2px] flex justify-center items-center'
+                bg-black/20 backdrop-blur-[1px] flex justify-center items-center'
         >
             <div
                 className='relative z-1 w-full max-w-[600px] min-w-[250px] 
-                    bg-gradient-to-tr from-black to-neutral-900 h-[400px] 
-                    rounded-2xl p-4 md:p-6 border border-neutral-700/50 shadow-lg 
+                    bg-neutral-800 h-[400px] 
+                    rounded-lg p-4 md:p-6 border border-neutral-700 shadow-lg 
                     text-white flex flex-col justify-center items-center overflow-hidden'
             >
-                <div className='absolute inset-0 translate-x-5/6 translate-y-1/3 w-50 h-60 bg-white/30 opacity-40 blur-3xl -z-1'/>
+                {/* <div className='absolute inset-0 translate-x-5/6 translate-y-1/3 w-50 h-60 bg-white/30 opacity-40 blur-3xl -z-1'/> */}
                 <MdMarkEmailUnread size={80} />
                 <h3
                     className='font-bold text-3xl capitalize mt-3'
@@ -27,41 +28,47 @@ const Confirm_Email_Modal = ({ setIsOpenConfirmModal }: { setIsOpenConfirmModal:
                     Verify your email
                 </h3>
                 <p
-                    className='text-neutral-400 font-light mt-3 mb-1.5'
+                    className='text-gray-400 text-center text-sm font-light mt-3 mb-1.5'
                 >
                     We’ve sent a verification link to your email address.
-                </p>
-                <p
-                    className='text-neutral-400 text-sm font-light'
-                >
+                    <br />
                     Please check your inbox and confirm to continue.
                 </p>
+                <span
+                    className='flex items-center gap-2 w-full text-sm py-1.5 px-3 mt-3 rounded text-yellow-500 bg-yellow-800/20 border border-yellow-700/60'
+                >
+                    <FiAlertTriangle size={18}/> It&apos;s just mock Notification, you can Login directly Now.
+                </span>
                 <button
                     onClick={() => setIsOpenConfirmModal(false)}
-                    className='bg-pink-700 rounded-lg hover:bg-pink-700/80 cursor-pointer py-2 px-6 text-sm mt-3'
+                    className='bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded
+                        cursor-pointer py-1.5 px-3 font-semibold text-sm mt-3
+                        flex items-center gap-1.5'
                 >
-                    Back to Login
+                    <IoChevronBack size={18}/> Back to Login
                 </button>
             </div>
         </div>
     )
 }
 export default function AuthForm() {
+    const { isLoggedIn, setIsLoggedIn } = useUserInfos();
+
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false);
     const [currentForm, setCurrentForm] = useState<'login' | 'signup'>('login');
     const [inputs, setInputs] = useState({
-        email: "",
-        password: "",
-        confirmpassword: "",
+        email: "mostafajaafari@test.com",
+        password: "123456789",
+        confirmpassword: "123456789",
     })
-    const [authError, setAuthError] = useState<string>("");
-    const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false);
-    
     const router = useRouter();
-
+    const [isLoading, setIsLoading] = useState(false);
     const HandleLoginSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const supabase = createClient();
+        if(isLoggedIn){
+            toast.info("Already logged in!");
+            return;
+        }
         if(currentForm === "signup"){
             if(inputs.password.trim().length < 6){
                 toast.error("Password must be at least 6 characters long.");
@@ -76,62 +83,46 @@ export default function AuthForm() {
                 return;
             }
             try{
-                setIsLoadingAuth(true);
-                supabase.auth.signUp({
-                    email: inputs.email,
-                    password: inputs.password,
-                }).then(({ error }) => {
-                    if(error){
-                        setAuthError(error.message);
-                        setIsLoadingAuth(false);
-                        return;
-                    }
+                setIsLoading(true);
+                const loadingToast = toast.loading(`Sign up...`);
+                startTransition(async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    toast.dismiss(loadingToast);
+                    setIsLoading(false)
+                    toast.success("Account created successfully. Please log in.");
                     setIsOpenConfirmModal(true);
                     setCurrentForm("login");
-                    toast.success("Account created successfully. Please log in.");
-                    setIsLoadingAuth(false);
                 })
             }catch (err){
-                setAuthError((err as { message: string }).message);
+                toast.error((err as { message: string }).message);
             }
         }else if (currentForm === "login"){
             if(inputs.password.trim().length < 6){
-                setAuthError("Password must be at least 6 characters long.")
-                setIsLoadingAuth(false);
+                toast.error("Password must be at least 6 characters long.")
                 return;
-            }else{
-                setAuthError("")
             }
             if(inputs.email.trim() === "" || inputs.password.trim() === ""){
-                setAuthError("Email and Password cannot be empty.");
-                setIsLoadingAuth(false);
+                toast.error("Email and Password cannot be empty.");
                 return;
             }
             try{
-                setIsLoadingAuth(true);
-                supabase.auth.signInWithPassword({
-                    email: inputs.email,
-                    password: inputs.password,
-                }).then(({ error }) => {
-                    if (error) {
-                        setAuthError(error.message);
-                        setIsLoadingAuth(false);
-                        return;
-                    } else {
-                        toast.success("Logged in successfully.");
-                        router.refresh();
-                        router.push('/');
-                        setIsLoadingAuth(false);
-                    }
+                setIsLoading(true)
+                const loadingToast = toast.loading(`Logging in...`);
+                startTransition(async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    setIsLoggedIn(true);
+                    toast.dismiss(loadingToast);
+                    setIsLoading(false)
+                    toast.success(`Logged in successfully.`);
+                    router.push('/');
                 })
             }catch (err){
-                setAuthError((err as { message: string }).message)
+                toast.error((err as { message: string }).message)
             }
         }
     }
 
     const HnandleInputsChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setAuthError("");
         const { value, name } = e.target;
         setInputs({...inputs, [name]: value});
     }
@@ -154,7 +145,10 @@ export default function AuthForm() {
                 value={inputs.email}
                 onChange={HnandleInputsChange}
                 placeholder='Email'
-                className='border border-neutral-800 hover:border-neutral-700 focus:border-pink-700 px-3 py-2 rounded-lg outline-none translate-all duration-200 placeholder:text-neutral-500 placeholder:font-extralight'
+                className='border border-neutral-700/60 hover:border-neutral-700 
+                    focus:border-pink-600 px-3 py-2.5 rounded outline-none 
+                    translate-all duration-200 placeholder:text-neutral-500 
+                    placeholder:font-extralight'
                 required
             />
         </div>
@@ -171,7 +165,10 @@ export default function AuthForm() {
                 value={inputs.password}
                 onChange={HnandleInputsChange}
                 placeholder='Password'
-                className='border border-neutral-800 hover:border-neutral-700 focus:border-pink-700 px-3 py-2 rounded-lg outline-none translate-all duration-200 placeholder:text-neutral-500 placeholder:font-extralight'
+                className='border border-neutral-700/60 hover:border-neutral-700 
+                    focus:border-pink-600 px-3 py-2.5 rounded outline-none 
+                    translate-all duration-200 placeholder:text-neutral-500 
+                    placeholder:font-extralight'
                 required
             />
         </div>
@@ -191,35 +188,37 @@ export default function AuthForm() {
                     value={inputs.confirmpassword}
                     onChange={HnandleInputsChange}
                     placeholder='Confirm Password'
-                    className='border border-neutral-800 hover:border-neutral-700 focus:border-pink-700 px-3 py-2 rounded-lg outline-none translate-all duration-200 placeholder:text-neutral-500 placeholder:font-extralight'
+                    className='border border-neutral-800 hover:border-neutral-700 focus:border-pink-700 px-3 py-2 rounded outline-none translate-all duration-200 placeholder:text-neutral-500 placeholder:font-extralight'
                     required
                 />
             </motion.div>
         )}
         {/* --- Error Message --- */}
-        {authError !== "" && (
+        {/* {isLoggedIn && (
             <p
-                className='bg-red-600/10 py-2 px-3 rounded-lg border border-red-600/50'
+                className='bg-red-600/10 py-2 px-3 rounded border border-red-600/50'
             >
-                <span className='text-sm text-red-500 flex items-center gap-1.5'><MdErrorOutline size={18} /> {authError}</span>
+                <span className='text-sm text-red-500 flex items-center gap-1.5'><MdErrorOutline size={18} /> Already logged in!</span>
             </p>
-        )}
+        )} */}
 
         {/* --- Submit Login Button --- */}
 
         <button
-            disabled={authError !== "" || isLoadingAuth}
-            className='bg-pink-700 hover:bg-pink-700/90 cursor-pointer
-                w-full flex justify-center py-2 rounded-lg
-                disabled:opacity-40 disabled:cursor-not-allowed min-h-[40px]
+            disabled={isLoggedIn || isLoading}
+            className='bg-pink-600 hover:bg-pink-600/80 cursor-pointer
+                w-full flex justify-center py-2 rounded
+                disabled:opacity-50 disabled:cursor-not-allowed 
+                disabled:text-neutral-300 min-h-[40px]
+                border border-pink-500
                 flex items-center justify-center gap-1.5'
         >
-            {isLoadingAuth ? (<AiOutlineLoading3Quarters size={18} className="animate-spin" />) : currentForm === 'login' ? 'Log In' : 'Sign Up'}
+            {isLoggedIn ? "Already logged in!" : isLoading ? "Loading..." : currentForm === 'login' ? 'Log In' : 'Sign Up'}
         </button>
 
         {/* --- Upgrade Plan --- */}
         <span
-            className='flex items-center gap-1 font-light text-sm'
+            className='flex items-center gap-1 font-light text-sm text-neutral-300'
         >
             <p>{currentForm === 'login' ? "Don't have an account ? " : "Already have an account ? "}</p>
             <button

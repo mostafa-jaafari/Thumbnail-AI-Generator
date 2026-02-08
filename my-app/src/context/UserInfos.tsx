@@ -1,73 +1,29 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
 
-type UserInfosType = {
-  userInfos: User | null;
-  isLoggedIn: boolean;
-  isLoading: boolean;
-};
 
-const UserInfosContext = createContext<UserInfosType | null>(null);
+type UserInfosContextType = {
+    isLoggedIn: boolean;
+    setIsLoggedIn: (value: boolean) => void;
+}
 
-export function UserInfosProvider({ children }: { children: ReactNode }) {
-  const [userInfos, setUserInfos] = useState<User | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+export const UserInfosContext = createContext<UserInfosContextType | null>(null);
 
-  useEffect(() => {
-    const supabase = createClient();
-    // 1️⃣ جلب المستخدم الحالي عند التحميل
-    const getInitialUser = async () => {
-      setIsLoading(true);
+export const UserInfosProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-      const { data } = await supabase.auth.getUser();
-      setUserInfos(data.user);
-      setIsLoggedIn(!!data.user);
-      
-      setIsLoading(false);
-    };
-
-    getInitialUser();
-
-    // 2️⃣ الاستماع لتغير حالة Auth
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUserInfos(session?.user || null);
-      setIsLoggedIn(!!session?.user);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return (
-    <UserInfosContext.Provider
-      value={{
-        userInfos,
-        isLoggedIn,
-        isLoading
-      }}
-    >
-      {children}
-    </UserInfosContext.Provider>
-  );
+    return (
+        <UserInfosContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            {children}
+        </UserInfosContext.Provider>
+    )
 }
 
 export const useUserInfos = () => {
-  const context = useContext(UserInfosContext);
-  if (!context) {
-    throw new Error(
-      "useUserInfos should be wrapped inside the UserInfosProvider"
-    );
-  }
-  return context;
-};
+    const context = useContext(UserInfosContext);
+    if (!context) {
+        throw new Error("useUserInfos must be used within a UserInfosProvider");
+    }
+    return context;
+}

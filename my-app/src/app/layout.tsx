@@ -3,9 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { UserInfosProvider } from "@/context/UserInfos";
 import { Toaster } from "sonner";
-import Header from "@/components/Header";
-import { createClient } from "@/utils/supabase/server";
-import { getUserCredits } from "@/data/getUserCredits";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,21 +19,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const User_Credits = user ? await getUserCredits() : null;
   return (
     <html lang="en">
       <body
         className={`${inter.variable} antialiased scroll-smooth w-full overflow-x-hidden`}
       >
-        <Toaster 
+        <Toaster
           position="top-center"
-          // style={{
-          // }}
         />
         <UserInfosProvider>
-          <Header User_Credits={User_Credits} />
           {children}
         </UserInfosProvider>
       </body>
