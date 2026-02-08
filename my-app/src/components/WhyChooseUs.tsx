@@ -30,14 +30,15 @@ const FeaturedCard = ({ Icon, Title, Description }: { Icon: IconType; Title: str
     )
 }
 
-export default function WhyChooseAs() {
+export default function WhyChooseUs() {
   return (
     <motion.section 
+        id="Why_us"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.5 }}
-        className='w-full lg:px-36 md:px-6 px-3 mt-12 flex flex-col items-center gap-12 md:gap-24'>
+        className='scroll-mt-30 w-full lg:px-36 md:px-6 px-3 mt-12 flex flex-col items-center gap-12 md:gap-24'>
         <div
             className='flex flex-col items-center'
         >

@@ -17,7 +17,8 @@ export default function ContactSales() {
 
   return (
     <div
-        className='relative w-full flex flex-col items-center lg:px-36 md:px-6 px-3'
+        id='Sales'
+        className='scroll-mt-30 relative w-full flex flex-col items-center lg:px-36 md:px-6 px-3'
     >
         <div className='absolute left-1/3 top-15 bg-pink-700/80 -z-1 blur-3xl w-120 h-120 opacity-10'/>
         <motion.div

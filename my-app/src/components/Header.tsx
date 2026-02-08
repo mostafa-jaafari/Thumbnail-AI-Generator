@@ -10,6 +10,7 @@ import { RiAiGenerate2, RiContactsFill } from 'react-icons/ri';
 import { BiLogIn, BiMenu } from 'react-icons/bi';
 import { useUserInfos } from '@/context/UserInfos';
 import { SignOutButton } from '@/app/auth/login/Auth_Button';
+import { useActiveSection } from '@/hooks/useActiveSection';
 
 
 const HeaderNavigation = [
@@ -115,8 +116,10 @@ const DropDownProfile = ({ User_Credits } : { User_Credits: number | null; setIs
     )
 }
 
-
+const sections = ["Home", "Preview", "Why_us", "Features_Showcase", "Reviews", "Plans", "Sales"];
 export default function Header() {
+    const active = useActiveSection(sections);
+    
     const DropDownProfileRef = useRef<HTMLDivElement | null>(null);
     const { isLoggedIn, setIsLoggedIn } = useUserInfos();
     const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -135,6 +138,17 @@ export default function Header() {
     const HandleCloseMenu = () => {
         setIsOpenMenu(false);
     }
+
+    const scrollToSection = (id: string) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
     return (
         <div
             className='w-full z-50 backdrop-blur-sm py-4 lg:px-36 md:px-6 px-3 flex items-center justify-between sticky top-0'
@@ -146,17 +160,18 @@ export default function Header() {
                 alt=''
             />
             <ul
-                className='hidden md:flex items-center lg:gap-12 md:gap-6'
+                className='hidden md:flex items-center lg:gap-6 md:gap-6'
             >
-                {HeaderNavigation.map((nav, idx) => {
+                {sections.map((nav, idx) => {
                     return (
-                        <Link
+                        <button
                             key={idx}
-                            href={nav.href}
-                            className='text-sm text-neutral-300 hover:text-white'
+                            onClick={() => scrollToSection(nav)}
+                            className={`text-sm cursor-pointer
+                                ${nav.toLowerCase() === active.toLowerCase() ? "text-white" : "text-neutral-500 hover:text-neutral-300"}`}
                         >
-                            {nav.name}
-                        </Link>
+                            {nav.replace("_", " ")}
+                        </button>
                     )
                 })}
             </ul>

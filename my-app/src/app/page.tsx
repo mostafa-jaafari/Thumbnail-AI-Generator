@@ -7,7 +7,7 @@ import PricingPlans from "@/components/PricingPlans";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import TestimonialMarquee from "@/components/Testimonials";
 import TiltPreview from "@/components/TiltPreview";
-import WhyChooseAs from "@/components/WhyChooseAs";
+import WhyChooseAs from "@/components/WhyChooseUs";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,7 +27,8 @@ export default function Home() {
       <TiltPreview />
       <WhyChooseAs />
       <div
-        className="relative z-1 my-12 md:my-24 w-full lg:px-36 md:px-6 px-3 flex md:flex-row flex-col items-start gap-6 md:gap-12"
+        id="Features_Showcase"
+        className="scroll-mt-30 relative z-1 my-12 md:my-24 w-full lg:px-36 md:px-6 px-3 flex md:flex-row flex-col items-start gap-6 md:gap-12"
       >
         <div className="absolute left-1/3 h-0 w-120 h-120 rounded-full blur-3xl opacity-20 bg-pink-700"/>
         <div

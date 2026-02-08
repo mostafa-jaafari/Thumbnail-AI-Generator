@@ -12,7 +12,8 @@ const Pricing_Details = [
 export default function PricingPlans() {
   return (
     <div
-        className='w-full lg:px-36 md:px-6 px-3 flex flex-col items-center'
+        id='Plans'
+        className='scroll-mt-20 w-full lg:px-36 md:px-6 px-3 flex flex-col items-center'
     >
         <div
             className='flex flex-col items-center'

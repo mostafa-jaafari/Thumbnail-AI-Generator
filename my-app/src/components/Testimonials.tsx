@@ -39,7 +39,9 @@ export const testimonials = [
 
 export default function TestimonialMarquee() {
   return (
-    <section className="w-full pb-20 md:pb-20 text-white relative">
+    <section 
+      id="Reviews"
+      className="scroll-mt-26 w-full pb-20 md:pb-20 text-white relative">
     <div className="absolute left-1/3 rounded-full w-160 h-160 bg-pink-700 opacity-10 blur-3xl"/>
     {/* Background Glow */}
     <motion.div
