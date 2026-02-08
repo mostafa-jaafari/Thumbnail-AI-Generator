@@ -13,6 +13,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 
+
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Thumbnailgo - Elevate Your Workflow with AI",
   description: "The all-in-one platform to build, create, and scale your social madia faster than ever.",
