@@ -8,11 +8,15 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import TestimonialMarquee from "@/components/Testimonials";
 import TiltPreview from "@/components/TiltPreview";
 import WhyChooseAs from "@/components/WhyChooseAs";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 
-
+export const metadata: Metadata = {
+  title: "Thumbnailgo - Elevate Your Workflow with AI",
+  description: "The all-in-one platform to build, create, and scale your social madia faster than ever.",
+};
 export default function Home() {
   return (
     <main

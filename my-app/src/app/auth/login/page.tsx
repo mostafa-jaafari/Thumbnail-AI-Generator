@@ -3,9 +3,14 @@ import AuthForm from './AuthForm'
 import AuthReviewsSection from './AuthReviewsSection'
 import Link from 'next/link'
 import { Auth_Button } from './Auth_Button'
+import { Metadata } from 'next'
 
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: "Securely access your NexGen account dashboard.",
+};
 export default function page() {
-    
     return (
         <div
             className='relative w-full flex h-screen overflow-hidden'
