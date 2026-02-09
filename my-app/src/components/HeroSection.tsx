@@ -11,8 +11,8 @@ export default function HeroSection() {
     const router = useRouter();
     return (
         <div
-            id='HeroSection'
-            className='scroll-mt-20 mp-8 md:mt-20 px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
+            id='Home'
+            className='scroll-mt-80 mp-8 md:mt-14 px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
         >
             <div
                 className='absolute top-0 -z-1 w-260 h-160 blur-3xl rounded-full opacity-10 bg-gradient-to-r from-transparent via-pink-600 to-transparent'
@@ -33,7 +33,7 @@ export default function HeroSection() {
                 </div>
 
                 <h1
-                    className='text-6xl font-bold leading-tight tracking-wide'
+                    className='text-5xl md:text-6xl font-bold leading-tight tracking-wide'
                 >
                     AI Thumbnail Generator for your 
                     <span 
@@ -51,19 +51,19 @@ export default function HeroSection() {
                 </p>
 
                 <div
-                    className='flex flex-col md:flex-row items-center gap-3'
+                    className='w-full max-w-[250px] md:max-w-[500px] flex flex-col md:flex-row justify-center items-center gap-3'
                 >
                     <button
                         onClick={() => router.push(isLoggedIn ? "/adm/generate" : "/auth/login")}
-                        className='py-3 px-6 text-sm rounded bg-pink-700
-                        flex items-center gap-1.5 hover:bg-pink-700/80 cursor-pointer
-                        border border-pink-500/60'
+                        className='w-full md:w-max py-3 px-6 text-sm rounded bg-pink-700
+                        flex items-center justify-center flex-shrink-0 gap-1.5 
+                        hover:bg-pink-700/80 cursor-pointer border border-pink-500/60'
                     >
                         {isLoggedIn ? "Generate Now" : "Get Started Now"}
                     </button>
                     <button
-                        className='py-3 px-6 text-sm rounded bg-transparent
-                        flex items-center gap-1.5 hover:bg-pink-700/10 cursor-pointer
+                        className='w-full md:w-max py-3 px-6 text-sm rounded bg-transparent
+                        flex items-center justify-center flex-shrink-0 gap-1.5 hover:bg-pink-700/10 cursor-pointer
                         border border-pink-500/60'
                     >
                         <BiVideo size={16}/>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 export default function LastCTA() {
   return (
     <motion.div
+        id="LastCTA"
         initial={{ opacity: 0, y: 75 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -18,7 +19,7 @@ export default function LastCTA() {
                 className='space-y-3 pb-6 md:pb-0'
             >
                 <h1
-                    className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-pink-400 text-transparent bg-clip-text'
+                    className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-pink-400 pb-1 text-transparent bg-clip-text'
                 >
                     Ready to go viral?
                 </h1>
@@ -29,7 +30,8 @@ export default function LastCTA() {
                 </p>
             </span>
             <button
-                className='bg-white text-sm cursor-pointer hover:bg-white/90 px-6 py-2 rounded-full text-black'
+                className='bg-white text-sm cursor-pointer hover:bg-white/90 
+                    px-6 py-2 rounded text-black hover:shadow-xl text-nowrap'
             >
                 Generate Free Thumbnail
             </button>

@@ -11,8 +11,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Thumbnailgo | Modern Solutions",
-    template: "%s | Thumbnailgo"
+    default: "NextGen | Modern Solutions",
+    template: "%s | NextGen"
   },
   description: "High-performance solutions for modern thumbnails.",
   metadataBase: new URL('https://nexgen.com'),
