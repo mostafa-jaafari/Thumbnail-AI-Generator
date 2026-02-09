@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import { GlobalLogo } from './GlobaleLogo';
 
 
 
@@ -17,14 +17,7 @@ export default function Footer() {
         <div
             className='w-full h-full py-12 col-span-1 flex justify-center items-start'
         >
-        <Image
-            src="https://thumbnailgo.com/logo.svg"
-            alt=''
-            width={200} 
-            height={60} 
-            className='object-cover'
-            loading='lazy'
-        />
+        <GlobalLogo />
         </div>
         <div
             className='w-full col-span-3 flex mb-6 md:mb-0'
@@ -69,7 +62,7 @@ export default function Footer() {
             <span
                 className='text-xs text-gray-200'
             >
-                &copy; {new Date().getFullYear()} Thumbnailgo
+                &copy; {new Date().getFullYear()} NextGen
             </span>
         </div>
     </div>

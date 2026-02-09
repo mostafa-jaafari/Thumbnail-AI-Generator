@@ -11,15 +11,19 @@ import { BiLogIn, BiMenu } from 'react-icons/bi';
 import { useUserInfos } from '@/context/UserInfos';
 import { SignOutButton } from '@/app/auth/login/Auth_Button';
 import { useActiveSection } from '@/hooks/useActiveSection';
+import { GlobalLogo } from './GlobaleLogo';
 
 
-const HeaderNavigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Features', href: '/' },
-    { name: 'Pricing', href: '/' },
-    { name: 'Contact', href: '/' }
-]
+const sections = ["Home", "Preview", "Why_us", "Features_Showcase", "Reviews", "Plans", "Sales"];
+const scrollToSection = (id: string) => {
+        const section = document.getElementById(id);
+        if (!section) return;
 
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
 const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
     const MenuRef = useRef<HTMLDivElement | null>(null);
 
@@ -41,12 +45,12 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
                 initial={{ opacity: 1, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 100 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full max-w-[300px] min-w-[200px] h-full border-l border-neutral-900 bg-gradient-to-tr from-black to-neutral-900 rounded-l-lg overflow-hidden"
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="w-full max-w-[300px] min-w-[200px] h-full border-l border-neutral-900 bg-neutral-900 rounded-l-lg overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div
-                    className='w-full flex justify-start p-3'
+                    className='w-full flex justify-start p-3 border-b border-neutral-700/60'
                 >
                     <button
                         onClick={HandleCloseMenu}
@@ -59,16 +63,30 @@ const DropMenu = ({ HandleCloseMenu }: { HandleCloseMenu: () => void }) => {
                 <div
                     className='w-full flex flex-col'
                 >
-                    {HeaderNavigation.map((nav, idx) => {
+                    {sections.map((nav, idx) => {
                         return (
                             <li
                                 key={idx}
+                                onClick={() => {
+                                    scrollToSection(nav);
+                                    setTimeout(() => HandleCloseMenu(), 100)
+                                }}
                                 className='border-b border-neutral-800 w-full py-3 px-6 hover:text-white text-neutral-300 cursor-pointer hover:bg-neutral-900/90 flex justify-start font-extralight text-sm'
                             >
-                                {nav.name}
+                                {nav.replace("_", " ")}
                             </li>
                         )
                     })}
+                </div>
+                <div
+                    className='w-full p-1.5'
+                >
+                    <button
+                        className='w-full py-2.5 text-sm rounded-lg bg-pink-600 
+                            hover:bg-pink-700 cursor-pointer border border-pink-500'
+                    >
+                        Login
+                    </button>
                 </div>
             </motion.div>
         </div>
@@ -116,7 +134,6 @@ const DropDownProfile = ({ User_Credits } : { User_Credits: number | null; setIs
     )
 }
 
-const sections = ["Home", "Preview", "Why_us", "Features_Showcase", "Reviews", "Plans", "Sales"];
 export default function Header() {
     const active = useActiveSection(sections);
     
@@ -139,26 +156,11 @@ export default function Header() {
         setIsOpenMenu(false);
     }
 
-    const scrollToSection = (id: string) => {
-        const section = document.getElementById(id);
-        if (!section) return;
-
-        section.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    };
-
     return (
         <div
             className='w-full z-50 backdrop-blur-sm py-4 lg:px-36 md:px-6 px-3 flex items-center justify-between sticky top-0'
         >
-            <Image 
-                src="https://thumbnailgo.com/logo.svg" 
-                width={200} 
-                height={60} 
-                alt=''
-            />
+            <GlobalLogo />
             <ul
                 className='hidden md:flex items-center lg:gap-6 md:gap-6'
             >

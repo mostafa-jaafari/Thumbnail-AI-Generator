@@ -17,7 +17,7 @@ import { BsArrowRight } from "react-icons/bs";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Thumbnailgo - Elevate Your Workflow with AI",
+  title: "NextGen - Elevate Your social media with AI",
   description: "The all-in-one platform to build, create, and scale your social madia faster than ever.",
 };
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
       <WhyChooseAs />
       <div
         id="Features_Showcase"
-        className="scroll-mt-30 relative z-1 my-12 md:my-24 w-full lg:px-36 md:px-6 px-3 flex md:flex-row flex-col items-start gap-6 md:gap-12"
+        className="scroll-mt-20 md:scroll-mt-30 relative z-1 my-12 md:my-24 w-full lg:px-36 md:px-6 px-3 flex md:flex-row flex-col items-start gap-6 md:gap-12"
       >
         <div className="absolute left-1/3 h-0 w-120 h-120 rounded-full blur-3xl opacity-20 bg-pink-700"/>
         <div

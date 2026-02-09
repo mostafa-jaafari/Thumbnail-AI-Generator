@@ -44,7 +44,7 @@ export default function TiltPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true , amount: 0.5}}
-            className="scroll-mt-20 px-3 md:px-6 w-full flex justify-center items-center">
+            className="scroll-mt-40 md:scroll-mt-20 px-3 md:px-6 w-full flex justify-center items-center">
             <div
                 className="relative w-full max-w-5xl aspect-video flex justify-center items-center cursor-pointer"
                 style={{ perspective: 3000 }}
