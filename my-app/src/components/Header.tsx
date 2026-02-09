@@ -10,11 +10,12 @@ import { RiAiGenerate2, RiContactsFill } from 'react-icons/ri';
 import { BiLogIn, BiMenu } from 'react-icons/bi';
 import { useUserInfos } from '@/context/UserInfos';
 import { SignOutButton } from '@/app/auth/login/Auth_Button';
+import { useRouter } from 'next/navigation';
 
 
 const HeaderNavigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Features', href: '/' },
+    { name: 'Home', href: '#HeroSection' },
+    { name: 'Features', href: '#TiltPreview' },
     { name: 'Pricing', href: '/' },
     { name: 'Contact', href: '/' }
 ]
@@ -135,6 +136,8 @@ export default function Header() {
     const HandleCloseMenu = () => {
         setIsOpenMenu(false);
     }
+
+    const router = useRouter();
     return (
         <div
             className='w-full z-50 backdrop-blur-sm py-4 lg:px-36 md:px-6 px-3 flex items-center justify-between sticky top-0'
@@ -150,13 +153,13 @@ export default function Header() {
             >
                 {HeaderNavigation.map((nav, idx) => {
                     return (
-                        <Link
+                        <button
                             key={idx}
-                            href={nav.href}
+                            onClick={() => router.push(nav.href)}
                             className='text-sm text-neutral-300 hover:text-white'
                         >
                             {nav.name}
-                        </Link>
+                        </button>
                     )
                 })}
             </ul>

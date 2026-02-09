@@ -11,7 +11,8 @@ export default function HeroSection() {
     const router = useRouter();
     return (
         <div
-            className='mp-8 md:mt-20 px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
+            id='HeroSection'
+            className='scroll-mt-20 mp-8 md:mt-20 px-3 md:px-6 w-full mb-12 flex flex-col items-center overflow-hidden'
         >
             <div
                 className='absolute top-0 -z-1 w-260 h-160 blur-3xl rounded-full opacity-10 bg-gradient-to-r from-transparent via-pink-600 to-transparent'
